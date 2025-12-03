@@ -125,7 +125,7 @@
 
     - name: Health check de la API
       uri:
-        url: "http://localhost:8080/api/servers"
+        url: "http://localhost:8080"
         method: GET
         status_code: 200
         timeout: 30
@@ -136,6 +136,7 @@
     - name: Despliegue exitoso
       debug:
         msg: "¡Despliegue completado exitosamente! API disponible en http://{{ ansible_host }}:8080"
+
 
 
 
