@@ -7,7 +7,7 @@
   vars:
     app_directory: /var/www/app
     docker_compose_file: docker-compose.prod.yml
-    image_tag: "{{ image_tag }}"
+    docker_image: "{{ image_tag }}"
 
   tasks:
     - name: Verificar que Docker está instalado
@@ -50,7 +50,7 @@
       copy:
         dest: "{{ app_directory }}/.env"
         content: |
-          IMAGE_TAG={{ image_tag }}
+          IMAGE_TAG={{ docker_image }}
           APP_ENV=production
           APP_DEBUG=false
           DB_DATABASE=laravel
@@ -69,7 +69,7 @@
 
     - name: Pull de la imagen Docker desde Docker Hub
       docker_image:
-        name: "{{ image_tag }}"
+        name: "{{ docker_image }}"
         source: pull
         force_source: yes
 
@@ -87,7 +87,7 @@
         recreate: always
         remove_orphans: yes
       environment:
-        IMAGE_TAG: "{{ image_tag }}"
+        IMAGE_TAG: "{{ docker_image }}"
 
     - name: Esperar a que la aplicación esté lista
       wait_for:
@@ -98,7 +98,7 @@
     - name: Ejecutar migraciones de base de datos
       docker_container:
         name: laravel-migrate
-        image: "{{ image_tag }}"
+        image: "{{ docker_image }}"
         command: php artisan migrate --force
         networks:
           - name: app_network
@@ -136,6 +136,9 @@
     - name: Despliegue exitoso
       debug:
         msg: "¡Despliegue completado exitosamente! API disponible en http://{{ ansible_host }}:8080"
+
+
+
 
 
 
