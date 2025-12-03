@@ -74,13 +74,13 @@
         force_source: yes
 
     - name: Detener contenedores existentes
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ app_directory }}"
         state: absent
       ignore_errors: yes
 
     - name: Levantar aplicación con Docker Compose
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ app_directory }}"
         state: present
         pull: yes
@@ -136,3 +136,4 @@
     - name: Despliegue exitoso
       debug:
         msg: "¡Despliegue completado exitosamente! API disponible en http://{{ ansible_host }}:8080"
+
