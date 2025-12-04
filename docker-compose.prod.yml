@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www
     environment:
+      - APP_KEY=base64:X2S0gUytZ6HYeA0K54qYuTZPX/fklNSZW36mHXNkHTY=
       - APP_ENV=production
       - APP_DEBUG=false
       - DB_CONNECTION=mysql
